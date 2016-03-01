@@ -20,8 +20,7 @@
 			<!-- drop - Any artifacts in the database will be deleted on application 
 				deployment. -->
 				
-			<!-- none | create | drop-and-create | drop-->		
-			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+			<!-- none | create | drop-and-create | drop-->
 			<property name="javax.persistence.schema-generation.create-source" value="metadata" />
 			<property name="javax.persistence.schema-generation.drop-source" value="metadata" />
 
@@ -31,6 +30,7 @@
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 
 		</properties>
 	</persistence-unit>

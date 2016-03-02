@@ -9,6 +9,10 @@
 	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
 	
+	<ui:define name="menuItemSelected">
+		<input type="hidden" id="selectedMenuItem" value="_Professionals"/>
+	</ui:define>
+	
 	<ui:define name="content">
 	
 		<h1 class="aw-page-title">Professionals</h1>
@@ -52,6 +56,8 @@
 		</h:form>
 	
 	</ui:define>
+	
+	
 	
 </ui:composition>
 

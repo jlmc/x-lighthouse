@@ -10,12 +10,15 @@
 	xmlns:p="http://primefaces.org/ui" 
 	xmlns:o="http://omnifaces.org/ui">
 	
+	<ui:define name="menuItemSelected">
+		<input type="hidden" id="selectedMenuItem" value="_Professionals"/>
+	</ui:define>
+	
 	<ui:define name="content">
 		<f:metadata>
 			<o:viewParam name="professional" value="#{professionalManager.professional}"/>
 			<f:viewAction action="#{professionalManager.init}"/>
 		</f:metadata>
-	
 	
 		<h1 class="aw-page-title">Professional</h1>
 		
@@ -150,6 +153,8 @@
 		</h:form>
 	
 	</ui:define>
+	
+	
 	
 </ui:composition>
 

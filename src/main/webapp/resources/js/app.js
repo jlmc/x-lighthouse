@@ -8,4 +8,11 @@ $(document).ready(function() {
 		
 		
 	});
+	
+	
+	var theId = $('#selectedMenuItem').val();
+	$('#'+theId).toggleClass('is-selected');
+	
 });
+
+

@@ -31,31 +31,32 @@
 	<aside class="aw-sidebar  js-sidebar">
 		<nav class="aw-menu">
 			<ul>
-				<li>
-					<h:link><i class="fa  fa-fw  fa-home"/>Dashboard</h:link>
+				<li id="_Dashboard">
+					<h:link outcome="/dashboard"><i class="fa  fa-fw  fa-home"/>Dashboard</h:link>
 				</li>
-				<li class="is-selected">
+				<li id="_Professionals">
 					<h:link outcome="/professionals/professionalsManager">
 						<i class="fa  fa-fw  fa-user"/>Professionals
 					</h:link>			
 				</li>
-				<li>
+				<li id="_Reports">
 					<h:link outcome="/reports/reportsManager">
 						<i class="fa  fa-fw  fa-file-text"/>Reports
 					</h:link>			
 				</li>
-				<li>
+				<li id="_Schedules">
 					<h:link outcome="/schedules/schedulesManager">
 						<i class="fa  fa-fw  fa-clock-o"/>Schedules
 					</h:link>			
 				</li>
-				<li>
+				<li id="_Configurations">
 					<h:link outcome="/configurations/configurations">
 						<i class="fa  fa-fw  fa-cog"/>Configurations
 					</h:link>			
 				</li>
 			</ul>
 		</nav>
+		<ui:insert name="menuItemSelected"></ui:insert>
 	</aside>
 	
 	<section class="aw-content  js-content">
@@ -66,5 +67,8 @@
 		</ui:insert>
 	</section>
 	
+	
+	
 </h:body>
+
 </html>

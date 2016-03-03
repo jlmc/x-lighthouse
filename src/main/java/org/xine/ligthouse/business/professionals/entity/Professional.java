@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -15,8 +16,17 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Version;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import org.xine.ligthouse.business.schedules.entity.Schedule;
+
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Professional implements Serializable {
 
@@ -43,6 +53,9 @@ public class Professional implements Serializable {
 	@ElementCollection
 	@CollectionTable(name = "Adresses", joinColumns = { @JoinColumn(name = "professionalCC") })
 	private List<Address> adresses = new ArrayList<>();
+
+	@ManyToMany(mappedBy = "professionals")
+	private Set<Schedule> schedules;
 
 	protected Professional() {
 	}
@@ -140,6 +153,14 @@ public class Professional implements Serializable {
 		this.version = version;
 	}
 
+	public Set<Schedule> getSchedules() {
+		return this.schedules;
+	}
+
+	protected void setSchedules(final Set<Schedule> schedules) {
+		this.schedules = schedules;
+	}
+
 	@Override
 	public String toString() {
 		return "Professional [cc=" + this.cc + "]";
@@ -149,6 +170,7 @@ public class Professional implements Serializable {
 	public int hashCode() {
 		return Objects.hash(this.cc);
 	}
+
 
 	@Override
 	public boolean equals(final Object obj) {

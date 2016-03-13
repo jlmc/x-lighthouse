@@ -6,11 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Report implements Serializable {
 
-	enum Status {
+	public enum Status {
 		ENABLE, DISABLE
 	}
 
@@ -19,23 +21,30 @@ public class Report implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotNull
+	@Size(min = 1, max = 50)
 	private String name;
+	@NotNull
+	@Size(min = 1, max = 100)
 	private String description;
+	@NotNull
 	private Status status = Status.ENABLE;
 
 	protected Report() {
 	}
 
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(final Long id) {
 		this.id = id;
 	}
 
+	
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(final String name) {
@@ -43,7 +52,7 @@ public class Report implements Serializable {
 	}
 
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(final String description) {
@@ -51,7 +60,7 @@ public class Report implements Serializable {
 	}
 
 	public Status getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(final Status status) {
@@ -62,32 +71,32 @@ public class Report implements Serializable {
 		private final Report report;
 
 		private Builder() {
-			this.report = new Report();
+			report = new Report();
 		}
 
 		public Builder id(final Long id) {
-			this.report.id = id;
+			report.id = id;
 			return this;
 		}
 
 		public Builder name(final String name) {
-			this.report.name = name;
+			report.name = name;
 			return this;
 		}
 
 		public Builder status(final Status status) {
-			this.report.status = status;
+			report.status = status;
 			return this;
 		}
 
 		public Builder description(final String description) {
-			this.report.description = description;
+			report.description = description;
 			return this;
 		}
 
 		public Report build() {
 			// some verifications
-			return this.report;
+			return report;
 		}
 
 		public static Builder init() {

@@ -8,41 +8,66 @@
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<ui:define name="content">
-	
+
+		<f:metadata>
+			<f:viewAction action="#{reportManager.initialize}" />
+		</f:metadata>
+
+
 		<h1 class="aw-page-title">Report</h1>
-		
+
 		<h:form id="frm">
-			
+
 			<p:toolbar>
-				<p:toolbarGroup align=left>
-					<p:commandButton value="Save"/>
+				<p:toolbarGroup align="left">
+					<p:commandButton value="Save" 
+									 action="#{reportManager.save}"	
+									 process="@this datos"
+									 update="@form"/>
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
-					<p:commandButton value="Clear"/>
-					<p:button value="Search" outcome="reports/reportsManager"/>
+					<p:commandButton value="Clear" />
+					<p:button value="Search" outcome="/reports/reportsManager" />
 				</p:toolbarGroup>
 			</p:toolbar>
+
+			<p:messages autoUpdate="false"/>
 			
-			<p:tabView style="margin-top:20px;">
-				<p:tabView>
-					<p:tab title="Report">
-					
-					</p:tab>
-					<p:tab title="Description">
-					
-					</p:tab>
-				</p:tabView>			
-			</p:tabView>
-		
+			<div class="ui-fluid" style="margin-top: 10px">
+				
+				
+				<p:panelGrid columns="2" layout="grid" id="datos"
+								columnClasses="ui-grid-col-2, ui-grid-col-10"
+								styleClass="panelgrid-noborder">
+
+							<p:outputLabel value="Name" for="name" />
+							<p:inputText id="name" required="true" value="#{reportManager.report.name}" />
+							
+							<p:outputLabel value="Status" for="status" />
+							<p:selectOneMenu id="status" value="#{reportManager.report.status}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{reportManager.statuss}" />
+							</p:selectOneMenu>
+
+
+							<p:outputLabel value="Description" for="description"/>
+							<p:inputTextarea id="description" value="#{reportManager.report.description}"/>
+
+				</p:panelGrid>
+							
+				
+			
+			</div>
+
 		</h:form>
 	</ui:define>
-	
+
 	<ui:define name="menuItemSelected">
-		<input type="hidden" id="selectedMenuItem" value="_Reports"/>
+		<input type="hidden" id="selectedMenuItem" value="_Reports" />
 	</ui:define>
-	
-	
+
+
 </ui:composition>
 

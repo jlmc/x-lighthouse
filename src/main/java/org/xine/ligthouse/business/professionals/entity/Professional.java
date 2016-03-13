@@ -154,7 +154,7 @@ public class Professional implements Serializable {
 	}
 
 	public Set<Schedule> getSchedules() {
-		return this.schedules;
+		return Collections.unmodifiableSet(this.schedules);
 	}
 
 	protected void setSchedules(final Set<Schedule> schedules) {

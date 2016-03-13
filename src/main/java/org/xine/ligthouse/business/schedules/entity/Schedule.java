@@ -53,7 +53,6 @@ public class Schedule {
 	@CollectionTable(name = "emails", joinColumns = {@JoinColumn(name="scheduleId")})
 	private Set<String> emails = new HashSet<>(0);
 
-
 	Schedule() {}
 
 	public Long getId() {

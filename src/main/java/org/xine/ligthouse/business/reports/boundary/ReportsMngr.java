@@ -26,5 +26,10 @@ public class ReportsMngr {
 	public Report getReport(Long reportId) {
 		return repository.getReport(reportId);
 	}
+
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

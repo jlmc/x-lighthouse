@@ -39,8 +39,8 @@ public class ProfessionalResource {
 		}
 	}
 	@DELETE
-	@Path("{id}")
-	public Response delete(@PathParam("cc") Long cc) {
+	@Path("{id : \\d+}")
+	public Response delete(@PathParam("id") Long cc) {
 		//this.professionalMngr.delete(cc);
 		return Response.status(Status.NOT_IMPLEMENTED).build();
 	}

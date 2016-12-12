@@ -48,9 +48,9 @@ public class ReportResource {
 		}
 	}
 
-	// @Consumes(MediaType.APPLICATION_JSON)
+	// @Consumes(MediaType.APPLICATION_JSON) @Path("{id:\\d+}")
 	@DELETE
-	@Path("{id}")
+	@Path("{id : \\d+}")
 	public Response delete(@PathParam("id") final Integer id) {
 		try {
 			reportMngr.delete(id);

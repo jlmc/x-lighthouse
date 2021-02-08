@@ -1,9 +1,5 @@
 package org.xine.ligthouse.presentation.infrastructure.converters;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collection;
-
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItems;
 import javax.faces.context.FacesContext;
@@ -11,61 +7,64 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 import javax.persistence.Id;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Collection;
 
 @FacesConverter(value = "entityConverter")
 public class EntityConverter implements Converter {
 
-	@Override
-	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+    @Override
+    public Object getAsObject(FacesContext context, UIComponent component, String value) {
 
-		if (isEmpty(value)) {
-			return null;
-		}
+        if (isEmpty(value)) {
+            return null;
+        }
 
-		final UISelectItems uiComponent = (UISelectItems) component.getChildren().get(0);
+        final UISelectItems uiComponent = (UISelectItems) component.getChildren().get(0);
 
-		final Collection<?> objects = (Collection<?>) uiComponent.getValue();
+        final Collection<?> objects = (Collection<?>) uiComponent.getValue();
 
-		final Object foundEntity = 
-				objects.stream()
-				.filter(entity -> getAsString(context, uiComponent, entity).equals(value))
-				.findFirst()
-				.orElse(null);
+        final Object foundEntity =
+                objects.stream()
+                .filter(entity -> getAsString(context, uiComponent, entity).equals(value))
+                .findFirst()
+                .orElse(null);
 
-		return foundEntity;
-	}
+        return foundEntity;
+    }
 
-	@Override
-	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		final Field field = findEntityIdField(value);
-		return getEntityIdValue(field, value);
-	}
+    @Override
+    public String getAsString(FacesContext context, UIComponent component, Object value) {
+        final Field field = findEntityIdField(value);
+        return getEntityIdValue(field, value);
+    }
 
-	private String getEntityIdValue(Field idField, Object value) {
+    private String getEntityIdValue(Field idField, Object value) {
 
-		try {
-			final Field field = value.getClass().getDeclaredField(idField.getName());
-			field.setAccessible(true);
+        try {
+            final Field field = value.getClass().getDeclaredField(idField.getName());
+            field.setAccessible(true);
 
-			return field.get(value).toString();
+            return field.get(value).toString();
 
-		} catch (IllegalArgumentException | 
-				 IllegalAccessException |
-				 NoSuchFieldException | 
-				 SecurityException e) {
-			throw new ConverterException("can´t getEntityIdValue from " + value);
-		} 
-	}
+        } catch (IllegalArgumentException |
+                 IllegalAccessException |
+                 NoSuchFieldException |
+                 SecurityException e) {
+            throw new ConverterException("can´t getEntityIdValue from " + value);
+        }
+    }
 
-	private Field findEntityIdField(Object value) {
-		return Arrays.stream(value.getClass().getDeclaredFields())
-				.filter((field) -> field.getAnnotation(Id.class) != null)
-				.findFirst().get();
-	}
+    private Field findEntityIdField(Object value) {
+        return Arrays.stream(value.getClass().getDeclaredFields())
+                .filter((field) -> field.getAnnotation(Id.class) != null)
+                .findFirst().get();
+    }
 
-	private boolean isEmpty(String value) {
-		return value == null || value.trim().isEmpty();
-	}
+    private boolean isEmpty(String value) {
+        return value == null || value.trim().isEmpty();
+    }
 
 
 

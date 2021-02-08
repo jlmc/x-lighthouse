@@ -13,39 +13,39 @@ import org.xine.ligthouse.business.professionals.entity.Professional.Specialty;
 
 public class ProfessionalTest {
 
-	@Test
-	public void createPressionalWithAll() {
+    @Test
+    public void createPressionalWithAll() {
 
-		final Professional professional = Professional.Builder.init()
-				.cc(1L)
-				.name("Maria Madalena")
-				.email("mariamadalena@domain.com")
-				.dateOfBirth(LocalDate.of(1982, Month.JANUARY, 5))
-				.phone("12345678")
-				.mobile("23456789")
-				.specialty(Specialty.NURSE)
-				.observations("nothing to say!!!")
-				.build();
+        final Professional professional = Professional.Builder.init()
+                .cc(1L)
+                .name("Maria Madalena")
+                .email("mariamadalena@domain.com")
+                .dateOfBirth(LocalDate.of(1982, Month.JANUARY, 5))
+                .phone("12345678")
+                .mobile("23456789")
+                .specialty(Specialty.NURSE)
+                .observations("nothing to say!!!")
+                .build();
 
 
-		assertNotNull(professional);
-	}
+        assertNotNull(professional);
+    }
 
-	@Test
-	public void addAdreass() {
-		final Professional professional = Professional.Builder.init().cc(1L).name("messi").email("messi@domain.com")
-				.dateOfBirth(LocalDate.of(1982, Month.JANUARY, 5)).phone("12345678").mobile("23456789")
-				.specialty(Specialty.NURSE).observations("nothing to say!!!").build();
+    @Test
+    public void addAdreass() {
+        final Professional professional = Professional.Builder.init().cc(1L).name("messi").email("messi@domain.com")
+                .dateOfBirth(LocalDate.of(1982, Month.JANUARY, 5)).phone("12345678").mobile("23456789")
+                .specialty(Specialty.NURSE).observations("nothing to say!!!").build();
 
-		final Address addressEs = Address.of("Spain", "Barcelona", "abs street", "10");
-		final Address addressAn = Address.of("Argentina", "Boenos Aires", "Ag street", "10");
+        final Address addressEs = Address.of("Spain", "Barcelona", "abs street", "10");
+        final Address addressAn = Address.of("Argentina", "Boenos Aires", "Ag street", "10");
 
-		professional.addAddress(addressAn);
-		professional.addAddress(addressEs);
+        professional.addAddress(addressAn);
+        professional.addAddress(addressEs);
 
-		final List<Address> adresses = professional.getAdresses();
+        final List<Address> adresses = professional.getAdresses();
 
-		assertEquals(2, adresses.size());
-	}
+        assertEquals(2, adresses.size());
+    }
 
 }

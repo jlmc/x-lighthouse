@@ -1,160 +1,159 @@
 <!DOCTYPE html >
 
 <ui:composition template="/WEB-INF/template/systemlayout.xhtml"
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
-	xmlns:p="http://primefaces.org/ui" 
-	xmlns:o="http://omnifaces.org/ui">
-	
-	<ui:define name="menuItemSelected">
-		<input type="hidden" id="selectedMenuItem" value="_Professionals"/>
-	</ui:define>
-	
-	<ui:define name="content">
-		<f:metadata>
-			<o:viewParam name="professional" value="#{professionalManager.professional}"/>
-			<f:viewAction action="#{professionalManager.init}"/>
-		</f:metadata>
-	
-		<h1 class="aw-page-title">Professional</h1>
-		
-		<h:form id="frm">
-			
-			<p:toolbar>
-				<p:toolbarGroup align="left">
-					<p:commandButton value="Save" 
-									 action="#{professionalManager.onSaveProfessional}"
-									 process="mytabview @this"
-									 update="@form"/>
-				</p:toolbarGroup>
-				<p:toolbarGroup align="right">
-					<p:commandButton value="Clear" action="#{professionalManager.onClear}" process="@this" update="@form"/>
-					<p:button value="Search" outcome="/professionals/professionalsManager"/>
-				</p:toolbarGroup>
-			</p:toolbar>
-			
-			
-			<p:messages autoUpdate="false"/>
-			
-			<div class="ui-fluid">
-				<p:tabView style="margin-top: 10px" id="mytabview" >
-					<p:tab title="Basic">
-						
-						<p:panelGrid columns="4" layout="grid"
-								columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
-								styleClass="panelgrid-noborder">
-							<p:outputLabel value="Name" for="name" />
-							<p:inputText id="name" required="true" value="#{professionalManager.professional.name}" />
-							
-							<p:outputLabel value="CC" for="cc" />
-							<p:inputText id="cc" required="true" style="width: 70%" value="#{professionalManager.professional.cc}"/>
-							
-							<p:outputLabel value="Phone" for="phone" />
-							<p:inputText id="phone" required="true" value="#{professionalManager.professional.phone}"/>
-							
-							<p:outputLabel value="Mobile" for="mobile" />
-							<p:inputText id="mobile" value="#{professionalManager.professional.mobile}"/>
-							
-							<p:outputLabel value="E-mail" for="email" />
-							<p:inputText id="email" required="true" value="#{professionalManager.professional.email}"/>
-							
-							<p:outputLabel value="Specialty" for="specialty" />
-							<p:selectOneMenu id="specialty" value="#{professionalManager.professional.specialty}">
-								<f:selectItem itemLabel="Select One" itemValue="" />
-								<f:selectItems value="#{professionalManager.specialtys}" />
-<!-- 								<f:selectItem itemLabel="select" /> -->
-<!-- 								<f:selectItem itemLabel="DOCTOR" itemValue="Doctor" /> -->
-<!-- 								<f:selectItem itemLabel="NURSE" itemValue="Nurse" /> -->
-							</p:selectOneMenu>
-							
-							<p:outputLabel value="Date of birth" for="dateofbirth" />
-							<p:calendar id="dateofbirth" pattern="dd/MM/yyyy" value="#{professionalManager.professional.dateOfBirth}"
-								 converter="org.xine.ligthouse.presentation.infrastructure.converters.LocalDateHtml5Converter"/>
-							
-							
-							<p:outputLabel/>
-							<p:outputLabel/>
-						</p:panelGrid>
-						
-					</p:tab>
-					
-					<p:tab title="Addresses">
-						<p:commandButton value="add address"  style="width: auto;" 
-											action="#{professionalManager.onNewAddressClick}"
-											process="@this"
-											oncomplete="PF('addressDialog').show()" 
-											update="frm:addressDialogID">
-							<p:resetInput target="frm:addressDialogID"/>
-						</p:commandButton>
-											
-						<p:dataTable value="#{professionalManager.addresses}" id="addressTable" var="address" reflow="true" emptyMessage="no address defined!" >
-							<p:column headerText="county" priority="6">
-								<h:outputText value="#{address.country}" />
-							</p:column>
-							<p:column headerText="city" priority="4">
-								<h:outputText value="#{address.city}"/>
-							</p:column>
-							<p:column headerText="street">
-								<h:outputText value="#{address.street}"/>
-							</p:column>
-							<p:column headerText="street">
-								<h:outputText value="#{address.number}"/>
-							</p:column>
-						</p:dataTable>
-					</p:tab>
-					
-					<p:tab title="Observations">
-						<h:panelGroup layout="block" style="padding-right: 10px">
-							<p:inputTextarea rows="7" />
-						</h:panelGroup>
-					</p:tab>
-				</p:tabView>
-			</div>
-			
-			<p:dialog widgetVar="addressDialog" id="addressDialogID" header="New Address" resizable="false" responsive="true" modal="true">
-				
-				<h:panelGroup layout="block" styleClass="ui-fluid" id="addressDialogPanel">
-				
-					
-					<p:messages autoUpdate="false"/>
-				
-					<p:panelGrid columns="2" layout="grid"  styleClass="panelgrid-noborder"
-								columnClasses="ui-grid-col-4, ui-grid-col-8">
-						<p:outputLabel value="country" for="country"/>
-						<p:inputText id="country" required="true" value="#{professionalManager.address.country}"/>
-						
-						<p:outputLabel value="city" for="city"/>
-						<p:inputText id="city" required="true" value="#{professionalManager.address.city}"/>
-						
-						<p:outputLabel value="street"/>
-						<p:inputText id="street" required="true" value="#{professionalManager.address.street}"/>
-						
-						<p:outputLabel value="number" for="number"/>
-						<p:inputText id="number" value="#{professionalManager.address.number}"/>
-						
-						<p:outputLabel/>
-						<p:commandButton value="add" icon="ui-icon-plus"
-										 action="#{professionalManager.onAddressAddClick}"
-										 process="addressDialogID" 
-										 update="mytabview:addressTable addressDialogPanel"
-										 oncomplete="if (!args.validationFailed) PF('addressDialog').hide()">
-						
-						</p:commandButton>
-					</p:panelGrid>
-					
-				</h:panelGroup>
-			</p:dialog>
-			
-		
-		</h:form>
-	
-	</ui:define>
-	
-	
-	
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <ui:define name="menuItemSelected">
+        <input type="hidden" id="selectedMenuItem" value="_Professionals"/>
+    </ui:define>
+    
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewParam name="professional" value="#{professionalManager.professional}"/>
+            <f:viewAction action="#{professionalManager.init}"/>
+        </f:metadata>
+    
+        <h1 class="aw-page-title">Professional</h1>
+        
+        <h:form id="frm">
+            
+            <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Save" 
+                                     action="#{professionalManager.onSaveProfessional}"
+                                     process="mytabview @this"
+                                     update="@form"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:commandButton value="Clear" action="#{professionalManager.onClear}" process="@this" update="@form"/>
+                    <p:button value="Search" outcome="/professionals/professionalsManager"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            
+            <p:messages autoUpdate="false"/>
+            
+            <div class="ui-fluid">
+                <p:tabView style="margin-top: 10px" id="mytabview" >
+                    <p:tab title="Basic">
+                        
+                        <p:panelGrid columns="4" layout="grid"
+                                columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+                                styleClass="panelgrid-noborder">
+                            <p:outputLabel value="Name" for="name" />
+                            <p:inputText id="name" required="true" value="#{professionalManager.professional.name}" />
+                            
+                            <p:outputLabel value="CC" for="cc" />
+                            <p:inputText id="cc" required="true" style="width: 70%" value="#{professionalManager.professional.cc}"/>
+                            
+                            <p:outputLabel value="Phone" for="phone" />
+                            <p:inputText id="phone" required="true" value="#{professionalManager.professional.phone}"/>
+                            
+                            <p:outputLabel value="Mobile" for="mobile" />
+                            <p:inputText id="mobile" value="#{professionalManager.professional.mobile}"/>
+                            
+                            <p:outputLabel value="E-mail" for="email" />
+                            <p:inputText id="email" required="true" value="#{professionalManager.professional.email}"/>
+                            
+                            <p:outputLabel value="Specialty" for="specialty" />
+                            <p:selectOneMenu id="specialty" value="#{professionalManager.professional.specialty}">
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{professionalManager.specialtys}" />
+<!--                                 <f:selectItem itemLabel="select" /> -->
+<!--                                 <f:selectItem itemLabel="DOCTOR" itemValue="Doctor" /> -->
+<!--                                 <f:selectItem itemLabel="NURSE" itemValue="Nurse" /> -->
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Date of birth" for="dateofbirth" />
+                            <p:calendar id="dateofbirth" pattern="dd/MM/yyyy" value="#{professionalManager.professional.dateOfBirth}"
+                                 converter="org.xine.ligthouse.presentation.infrastructure.converters.LocalDateHtml5Converter"/>
+                            
+                            
+                            <p:outputLabel/>
+                            <p:outputLabel/>
+                        </p:panelGrid>
+                        
+                    </p:tab>
+                    
+                    <p:tab title="Addresses">
+                        <p:commandButton value="add address"  style="width: auto;" 
+                                            action="#{professionalManager.onNewAddressClick}"
+                                            process="@this"
+                                            oncomplete="PF('addressDialog').show()" 
+                                            update="frm:addressDialogID">
+                            <p:resetInput target="frm:addressDialogID"/>
+                        </p:commandButton>
+                                            
+                        <p:dataTable value="#{professionalManager.addresses}" id="addressTable" var="address" reflow="true" emptyMessage="no address defined!" >
+                            <p:column headerText="county" priority="6">
+                                <h:outputText value="#{address.country}" />
+                            </p:column>
+                            <p:column headerText="city" priority="4">
+                                <h:outputText value="#{address.city}"/>
+                            </p:column>
+                            <p:column headerText="street">
+                                <h:outputText value="#{address.street}"/>
+                            </p:column>
+                            <p:column headerText="street">
+                                <h:outputText value="#{address.number}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    
+                    <p:tab title="Observations">
+                        <h:panelGroup layout="block" style="padding-right: 10px">
+                            <p:inputTextarea rows="7" />
+                        </h:panelGroup>
+                    </p:tab>
+                </p:tabView>
+            </div>
+            
+            <p:dialog widgetVar="addressDialog" id="addressDialogID" header="New Address" resizable="false" responsive="true" modal="true">
+                
+                <h:panelGroup layout="block" styleClass="ui-fluid" id="addressDialogPanel">
+                
+                    
+                    <p:messages autoUpdate="false"/>
+                
+                    <p:panelGrid columns="2" layout="grid"  styleClass="panelgrid-noborder"
+                                columnClasses="ui-grid-col-4, ui-grid-col-8">
+                        <p:outputLabel value="country" for="country"/>
+                        <p:inputText id="country" required="true" value="#{professionalManager.address.country}"/>
+                        
+                        <p:outputLabel value="city" for="city"/>
+                        <p:inputText id="city" required="true" value="#{professionalManager.address.city}"/>
+                        
+                        <p:outputLabel value="street"/>
+                        <p:inputText id="street" required="true" value="#{professionalManager.address.street}"/>
+                        
+                        <p:outputLabel value="number" for="number"/>
+                        <p:inputText id="number" value="#{professionalManager.address.number}"/>
+                        
+                        <p:outputLabel/>
+                        <p:commandButton value="add" icon="ui-icon-plus"
+                                         action="#{professionalManager.onAddressAddClick}"
+                                         process="addressDialogID" 
+                                         update="mytabview:addressTable addressDialogPanel"
+                                         oncomplete="if (!args.validationFailed) PF('addressDialog').hide()">
+                        
+                        </p:commandButton>
+                    </p:panelGrid>
+                    
+                </h:panelGroup>
+            </p:dialog>
+            
+        
+        </h:form>
+    
+    </ui:define>
+    
+    
+    
 </ui:composition>
 

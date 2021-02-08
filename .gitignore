@@ -15,3 +15,6 @@ hs_err_pid*
 /.classpath
 /.project
 faces-config.pageflow
+
+/.idea/
+*.iml

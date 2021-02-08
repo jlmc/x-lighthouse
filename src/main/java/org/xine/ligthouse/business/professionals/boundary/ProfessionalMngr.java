@@ -1,30 +1,29 @@
 package org.xine.ligthouse.business.professionals.boundary;
 
-import java.util.Collection;
+import org.xine.ligthouse.business.professionals.control.ProfessionalRepository;
+import org.xine.ligthouse.business.professionals.entity.Professional;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-
-import org.xine.ligthouse.business.professionals.control.ProfessionalRepository;
-import org.xine.ligthouse.business.professionals.entity.Professional;
+import java.util.Collection;
 
 @Stateless
 public class ProfessionalMngr {
 
-	@Inject
-	ProfessionalRepository professionalRepository;
+    @Inject
+    ProfessionalRepository professionalRepository;
 
-	public Collection<Professional> getProfessionals() {
-		return professionalRepository.shearch();
-	}
+    public Collection<Professional> getProfessionals() {
+        return professionalRepository.shearch();
+    }
 
-	public Professional save(final Professional professional) {
-		return professionalRepository.save(professional);
-	}
+    public Professional save(final Professional professional) {
+        return professionalRepository.save(professional);
+    }
 
-	public Professional getProfessional(final Long cc) {
-		return professionalRepository.getProfessional(cc);
-	}
+    public Professional getProfessional(final Long cc) {
+        return professionalRepository.getProfessional(cc);
+    }
 
 
 }

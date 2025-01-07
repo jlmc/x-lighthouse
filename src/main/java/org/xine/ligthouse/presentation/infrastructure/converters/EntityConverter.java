@@ -25,13 +25,10 @@ public class EntityConverter implements Converter {
 
         final Collection<?> objects = (Collection<?>) uiComponent.getValue();
 
-        final Object foundEntity =
-                objects.stream()
-                .filter(entity -> getAsString(context, uiComponent, entity).equals(value))
-                .findFirst()
-                .orElse(null);
-
-        return foundEntity;
+        return objects.stream()
+        .filter(entity -> getAsString(context, uiComponent, entity).equals(value))
+        .findFirst()
+        .orElse(null);
     }
 
     @Override
@@ -59,7 +56,8 @@ public class EntityConverter implements Converter {
     private Field findEntityIdField(Object value) {
         return Arrays.stream(value.getClass().getDeclaredFields())
                 .filter((field) -> field.getAnnotation(Id.class) != null)
-                .findFirst().get();
+                .findFirst()
+                .orElseThrow();
     }
 
     private boolean isEmpty(String value) {

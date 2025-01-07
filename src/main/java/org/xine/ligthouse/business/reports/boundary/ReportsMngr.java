@@ -28,7 +28,6 @@ public class ReportsMngr {
 
     public void delete(Integer id) {
         // TODO Auto-generated method stub
-
     }
 
 }

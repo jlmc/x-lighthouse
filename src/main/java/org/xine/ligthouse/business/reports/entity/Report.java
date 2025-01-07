@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serial;
 import java.io.Serializable;
 
 @JsonbRepresentation
@@ -20,7 +19,6 @@ public class Report implements Serializable {
         ENABLE, DISABLE
     }
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

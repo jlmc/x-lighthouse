@@ -20,18 +20,14 @@ public class ReportManager implements Serializable {
 
     private Report report;
 
-    private final Status statuss[] = Report.Status.values();
+    private final Status[] statuss = Report.Status.values();
 
     public void initialize() {
         report = Report.Builder.empty();
     }
 
-
-
     public void save() {
-
-
-
+        // TODO: Missing implementation
     }
 
 

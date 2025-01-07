@@ -27,8 +27,7 @@ public class ProfessionalConverter implements Converter<Professional> {
             return null;
         }
 
-        final String cc = value;
-        return this.bo.getProfessional(Long.valueOf(cc));
+        return this.bo.getProfessional(Long.valueOf(value));
     }
 
     @Override

@@ -19,8 +19,6 @@ public class LocalDateHtml5Converter implements Converter {
     private static DateTimeConverter originalConverter = new DateTimeConverter();
 
     static {
-        // forClass = LocalDate.class,
-        // originalConverter.setPattern("yyyy-MM-dd");
         originalConverter.setPattern("dd/MM/yyyy");
     }
 

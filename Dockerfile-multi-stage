@@ -1,0 +1,27 @@
+# Stage 1: Build the application
+FROM maven:3.9.9-eclipse-temurin-11-alpine AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy Maven project files
+COPY pom.xml ./
+COPY src ./src
+
+# Build the application
+RUN mvn clean package -DskipTests
+
+# Stage 2: Deployment
+FROM jboss/wildfly:17.0.0.Final
+
+# Configure Java options
+ENV JAVA_OPTS="$JAVA_OPTS --add-opens java.base/java.lang=ALL-UNNAMED"
+
+# Copy the WAR file from the builder stage to the deployment directory
+COPY --from=builder /app/target/x-lighthouse.war /opt/jboss/wildfly/standalone/deployments/
+
+# Expose port 8080 for the application
+EXPOSE 8080
+
+# Start WildFly
+CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]

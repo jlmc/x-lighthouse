@@ -4,10 +4,24 @@ import org.xine.ligthouse.business.professionals.entity.Professional;
 import org.xine.ligthouse.business.reports.entity.Report;
 import org.xine.ligthouse.core.jsonb.JsonbRepresentation;
 
-import javax.persistence.*;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @JsonbRepresentation
 @Entity
@@ -120,8 +134,8 @@ public class Schedule {
                 if(this.emails == null) {
                     throw new IllegalArgumentException("can't add a null email on the Schedule.");
                 }
-                //TODO:: we can use InternetAddress with jpa converter
-                //TODO:: some other validations
+                //TODO: we can use InternetAddress with jpa converter
+                //TODO: some other validations
 
                 this.emails.add(email.toLowerCase());
             });
@@ -146,7 +160,7 @@ public class Schedule {
     }
 
     public void removeProfessional(Professional professional) {
-        if (professional == null) {
+        if (professional != null) {
             this.professionals.remove(professional);
         }
     }

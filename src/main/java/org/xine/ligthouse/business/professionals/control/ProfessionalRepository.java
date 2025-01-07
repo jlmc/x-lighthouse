@@ -14,13 +14,7 @@ import static org.xine.ligthouse.business.professionals.entity.Professional.Buil
 @Singleton
 public class ProfessionalRepository {
 
-    // @TransactionAttribute(TransactionAttributeType.MANDATORY)
-    // @PersistenceContext(unitName="bookstore")
-    // private EntityManager entityManager;
-
     public Set<Professional> professionals = new LinkedHashSet<>();
-
-    // private final AtomicInteger sec = new AtomicInteger(0);
 
     @PostConstruct
     public void initialize() {
@@ -53,11 +47,7 @@ public class ProfessionalRepository {
                 .specialty(Specialty.DOCTOR)
                 .observations("nothing to say!!!")
                 .build());
-
-
-
     }
-
 
     public Professional save(final Professional professional) {
         if (professional == null) {
@@ -78,12 +68,10 @@ public class ProfessionalRepository {
     }
 
     public Professional getProfessional(final Long cc) {
-        final Professional professional = this.professionals
-                                              .stream()
-                                              .filter(p -> p.getCc().equals(cc))
-                                              .findFirst()
-                                              .orElseGet(null);
-        return professional;
+        return this.professionals.stream()
+                .filter(p -> p.getCc().equals(cc))
+                .findFirst()
+                .orElseGet(null);
     }
 
 }

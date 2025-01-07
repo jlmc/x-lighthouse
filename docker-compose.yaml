@@ -1,0 +1,13 @@
+networks:
+  xnet-demo:
+    driver: bridge
+
+services:
+  x-lighthouse:
+    build:
+      dockerfile: Dockerfile-multi-stage
+      context: .
+    networks:
+      - xnet-demo
+    ports:
+      - "8080:8080"

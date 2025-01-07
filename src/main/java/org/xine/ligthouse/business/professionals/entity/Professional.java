@@ -25,7 +25,7 @@ public class Professional implements Serializable {
     private String name;
     private String phone;
     private String mobile;
-    private String email;;
+    private String email;
     private LocalDate dateOfBirth;
     private String observations;
     private Specialty specialty = Specialty.DOCTOR;

@@ -109,13 +109,8 @@ public class Address implements Serializable {
             return false;
         }
         if (this.street == null) {
-            if (other.street != null) {
-                return false;
-            }
-        } else if (!this.street.equalsIgnoreCase(other.street)) {
-            return false;
-        }
-        return true;
+            return other.street == null;
+        } else return this.street.equalsIgnoreCase(other.street);
     }
 
     public static Address empty() {
